@@ -17,6 +17,7 @@
 </template>
 <script>
 import Portifolio from '../HOME/Portifolio'
+
 export default {
    name: 'Home',
    components: {
@@ -29,7 +30,7 @@ export default {
         return {
                test: 0,
                carousels: [
-                { imagem: "/imagens/dna.jpg", text: 'primary', color: 'primary' }
+                { imagem: "./../assets/dna.jpg", text: 'primary', color: 'primary' }
                 // { imagem: dna, text: 'info', color: 'info' },
                 // { imagem: dna, text: 'success', color: 'success' },
                 // { imagem: dna, text: 'warning', color: 'warning' },

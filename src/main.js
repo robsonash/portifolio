@@ -8,6 +8,7 @@ import Home from './components/HOME/Home.vue'
 import Bitcoin from './components/Api/Bitcoin.vue'
 import Cep from './components/Api/Cep.vue'
 import Tempo from './components/Api/Tempo.vue'
+import Filme from './components/Api/Filme.vue'
 import NotFound from './components/NotFound';
 
 
@@ -20,6 +21,7 @@ const router = new VueRouter({
     { path:'/api/bitcoin',component:Bitcoin },
     { path:'/api/cep',component:Cep },
     { path:'/api/tempo',component:Tempo },
+    { path:'/api/filme',component:Filme },
    { path:'*',component:NotFound }
     
   ]

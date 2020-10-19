@@ -34,6 +34,9 @@
       <a class="navbar-item" >
       <router-link class="navbar-item" to="/api/tempo">Tempo</router-link>
       </a>
+      <a class="navbar-item" >
+      <router-link class="navbar-item" to="/api/filme">Filmes</router-link>
+      </a>
       </div>
       </div>
     </div>

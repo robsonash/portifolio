@@ -74,7 +74,7 @@ export default {
             items: [
                 {
                     title: 'Slide 1',
-                    image: '/imagens/dna.jpg'
+                    image: './assets/dna.jpg'
                 },
                 {
                     title: 'Slide 2',
