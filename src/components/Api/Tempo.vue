@@ -10,7 +10,7 @@
            <div class="columns">
   <div class="column">
     
-               <div class="control  ">
+               <div class="control">
              <!-- <div class="column  "> -->
               <h3 class="has-text-white is-size-4 "> Selecione o Estado </h3>
                <!-- </div> -->

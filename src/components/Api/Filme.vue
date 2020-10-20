@@ -21,26 +21,22 @@
       <div class="column">
         <section class="section has-background-success">
           <div class="custom-linha">
-            <div class="custom-coluna">
-
-
+            <div v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
               <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-content">
-        <p class="title is-4">John Smith</p>
-        <p class="subtitle is-6">@johnsmith</p>
-      </div>
-    </div>
-  </div>
-</div>
-         
-            
+                <div class="card-image">
+                  <figure class="image">
+                    <img :src="'https://image.tmdb.org/t/p/w500/' + filme.poster_path" alt="Placeholder image"/>
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-6">{{filme.title}}</p>
+                      <p class="subtitle is-6">{{filme.vote_average}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -54,7 +50,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-     filmes:[],
+      filmes: [],
       error: false,
       loading: true,
     };
@@ -63,10 +59,11 @@ export default {
   components: {},
   mounted() {
     axios
-      .get("https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1")
+      .get(
+        "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
+      )
       .then((r) => {
-     this.filmes = r.data;
-     console.log(filmes)
+        this.filmes = r.data;
       })
       .catch((error) => {
         this.error = true;
@@ -115,8 +112,7 @@ h2 {
   justify-content: center;
 }
 .custom-coluna {
-
- 
+  margin-bottom: 5%!important;
   max-height: 500px;
   width: 30%;
   max-width: 300px;
@@ -125,42 +121,51 @@ h2 {
   line-height: 75px;
   font-size: 30px;
 }
-.section{
-  padding-left: 0!important;
-   padding-right: 0!important;
+.section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   margin-top: 30px;
-  padding-top: 30px!important;
+  padding-top: 30px !important;
 }
-.card{
-border-radius: 5%
+.card {
+  border-radius: 5%;
+}
+.card-content{
+
+  padding: 0!important;
+  margin-top: 10px!important;
+  margin-bottom: 10px!important;
+}
+.media-content p{
+  
+    color: #546e7a;
+}
+img{
+  width: none!important;
+height: auto!important;
 }
 @media screen and (max-width: 1024px) {
-
-.menu-list{
-  margin-left: 50px;
-  margin-right: 50px;
- padding: 0;
-}
+  .menu-list {
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 0;
+  }
 }
 @media screen and (max-width: 700px) {
-.custom-coluna {
- width: 40%;
- max-width: 40%;
-
-  
-}
-.menu-list{
- padding: 0;
-}
+  .custom-coluna {
+    width: 40%;
+    max-width: 40%;
+  }
+  .menu-list {
+    padding: 0;
+  }
 }
 
 @media screen and (max-width: 500px) {
-.custom-coluna {
- width: 90%;
- max-width: 90%;
-
-  
-}
- 
+  .custom-coluna {
+    width: 90%;
+      margin-bottom: 50%!important;
+    max-width: 90%;
+  }
 }
 </style>
