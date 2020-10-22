@@ -30,8 +30,26 @@
 
 
       <div class="column">
+         <div v-if="loading">
+                <b-loading v-model="loading" :can-cancel="true">
+                <b-icon
+                    pack="fas"
+                    icon="sync-alt"
+                    size="is-large"
+                    custom-class="fa-spin">
+                </b-icon>
+            </b-loading></div> 
+          <div v-if="error" >
+            Desculpe, informações indisponiveis
+          </div>
+
+
+
+
+
         <section class="section has-background-success">
           <div  class="custom-linha">
+            
             <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
               <div class="card">
                 <div class="card-image">
@@ -49,6 +67,9 @@
                 </div>
               </div>
             </div>
+
+
+
           </div>   
         </section>
       </div>
@@ -71,18 +92,18 @@ export default {
       maisVotados:'top_rated',
       proximos:'upcoming',
       error: false,
-      loading: true,
+      loading: false,
     };
   },
   name: "Api",
   components: {},
   methods:{
        metodofilmes(status){
-axios
-         
+          this.loading = true;
+axios     
         // "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by="+ status +".desc&include_adult=false&include_video=false&page=1"
 
-      .get("https://api.themoviedb.org/3/movie/"+ status +"?api_key=553bdd8a7c40214943be5b047025dbb9&page=1")
+      .get("https://api.themoviedb.org/3/movie/"+ status +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9&page=1")
 
         
       .then((r) => {
