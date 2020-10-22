@@ -49,7 +49,7 @@
 
         <section class="section has-background-success">
           <div  class="custom-linha">
-            
+
             <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
               <div class="card">
                 <div class="card-image">
@@ -67,11 +67,28 @@
                 </div>
               </div>
             </div>
-
-
-
           </div>   
+ <div>
+        <b-pagination
+            :total="total"
+            v-model="current"
+            :range-before="rangeBefore"
+            :range-after="rangeAfter"
+            :order="order"
+            :size="size"
+            :simple="isSimple"
+            :rounded="isRounded"
+            :per-page="perPage"
+            :icon-prev="prevIcon"
+            :icon-next="nextIcon"
+            aria-next-label="Next page"
+            aria-previous-label="Previous page"
+            aria-page-label="Page"
+            aria-current-label="Current page">
+        </b-pagination>
+        </div>
         </section>
+       
       </div>
 
 
@@ -93,6 +110,19 @@ export default {
       proximos:'upcoming',
       error: false,
       loading: false,
+
+
+        total: 200,
+                current: 10,
+                perPage: 10,
+                rangeBefore: 3,
+                rangeAfter: 3,
+                order: 'is-centered',
+                size: '',
+                isSimple: false,
+                isRounded: false,
+                prevIcon: 'chevron-left',
+                nextIcon: 'chevron-right'
     };
   },
   name: "Api",
@@ -159,6 +189,9 @@ h2 {
   justify-content: center;
 }
 .custom-coluna {
+     
+      box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
+       /*box-shadow: 0rem 2rem 5rem rgb(255 255 255 / 30%);*/
   margin-bottom: 5%!important;
   max-height: 500px;
   width: 30%;
@@ -169,6 +202,7 @@ h2 {
   font-size: 30px;
 }
 .section {
+  /*background-color: #000000 !important;*/
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin-top: 30px;
@@ -178,7 +212,7 @@ h2 {
   border-radius: 5%;
 }
 .card-content{
-
+height: 70px!important;
   padding: 0!important;
   margin-top: 10px!important;
   margin-bottom: 10px!important;
@@ -189,7 +223,8 @@ h2 {
 }
 img{
   width: none!important;
-height: auto!important;
+
+   height: 400px!important;
 }
 @media screen and (max-width: 1024px) {
   .menu-list {
@@ -197,6 +232,10 @@ height: auto!important;
     margin-right: 50px;
     padding: 0;
   }
+  img{
+  width: none!important;
+   height: 400px!important;
+}
 }
 @media screen and (max-width: 700px) {
   .custom-coluna {
@@ -206,7 +245,13 @@ height: auto!important;
   .menu-list {
     padding: 0;
   }
+  img{
+  width: none!important;
+   height: 400px!important;
+  
 }
+}
+
 
 @media screen and (max-width: 500px) {
   .custom-coluna {
@@ -214,5 +259,10 @@ height: auto!important;
       margin-bottom: 50%!important;
     max-width: 90%;
   }
+  img{
+  width: none!important;
+   height: auto!important;
+}
+
 }
 </style>
