@@ -7,21 +7,32 @@
       <aside class="menu">
         <p class="menu-label">CATEGORIAS</p>
         <ul class="menu-list">
-          <li>
+          
+          <li v-on:click="metodofilmes(populares)">
+
             <a><i class="fas fa-heart coracao"></i>POPULARES</a>
+
           </li>
-          <li>
+
+          <li  v-on:click="metodofilmes(maisVotados)">
+
             <a><i class="fas fa-star estrela"></i>MAIS VOTADO</a>
+
           </li>
-          <li>
-            <a><i class="fas fa-hourglass tempo"></i>PRÒXIMOS</a>
+          <li v-on:click="metodofilmes(proximos)">
+
+            <a ><i class="fas fa-hourglass tempo"></i>PRÒXIMOS</a>
+
           </li>
         </ul>
       </aside>
+
+
+
       <div class="column">
         <section class="section has-background-success">
-          <div class="custom-linha">
-            <div v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
+          <div  class="custom-linha">
+            <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
               <div class="card">
                 <div class="card-image">
                   <figure class="image">
@@ -38,9 +49,14 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>   
         </section>
       </div>
+
+
+
+
+
     </div>
   </div>
 </template>
@@ -50,18 +66,25 @@ import axios from "axios";
 export default {
   data() {
     return {
-      filmes: [],
+      filmes:{},
+       populares:'popular',
+      maisVotados:'top_rated',
+      proximos:'upcoming',
       error: false,
       loading: true,
     };
   },
   name: "Api",
   components: {},
-  mounted() {
-    axios
-      .get(
-        "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1"
-      )
+  methods:{
+       metodofilmes(status){
+axios
+         
+        // "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by="+ status +".desc&include_adult=false&include_video=false&page=1"
+
+      .get("https://api.themoviedb.org/3/movie/"+ status +"?api_key=553bdd8a7c40214943be5b047025dbb9&page=1")
+
+        
       .then((r) => {
         this.filmes = r.data;
       })
@@ -71,6 +94,9 @@ export default {
       .finally(() => {
         this.loading = false;
       });
+   }},
+  mounted() {
+    this.metodofilmes(this.populares);
   },
 };
 </script>
