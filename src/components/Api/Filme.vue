@@ -106,9 +106,9 @@ export default {
       proximos:'upcoming',
       error: false,
       loading: false,
-atual:'',
+      atual:'',
 
-                total: 200,
+                total: '',
                 current: 1,
                 perPage: 10,
                 rangeBefore: 3,
@@ -129,9 +129,6 @@ atual:'',
           this.loading = true;
           this.atual = status;
           this.current = pagina;
-      console.log("atual status = " + this.atual )
-          console.log("current = " + this.current )
-           console.log("oq veio da pagina = " + pagina )
 
 axios     
         // "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by="+ status +".desc&include_adult=false&include_video=false&page=1"
@@ -141,6 +138,7 @@ axios
         
       .then((r) => {
         this.filmes = r.data;
+        this.total = this.filmes.total_pages; 
       })
       .catch((error) => {
         this.error = true;
@@ -224,7 +222,7 @@ height: 70px!important;
   
     color: #546e7a;
 }
-img{
+.image img{
   width: none!important;
 
    height: 400px!important;
@@ -235,7 +233,7 @@ img{
     margin-right: 50px;
     padding: 0;
   }
-  img{
+  .image img{
   width: none!important;
    height: 400px!important;
 }
@@ -248,7 +246,7 @@ img{
   .menu-list {
     padding: 0;
   }
-  img{
+  .image img{
   width: none!important;
    height: 400px!important;
   
@@ -262,7 +260,7 @@ img{
       margin-bottom: 50%!important;
     max-width: 90%;
   }
-  img{
+  .image img{
   width: none!important;
    height: auto!important;
 }
