@@ -8,18 +8,18 @@
         <p class="menu-label">CATEGORIAS</p>
         <ul class="menu-list">
           
-          <li v-on:click="metodofilmes(populares)">
+          <li v-on:click="metodofilmes(populares,1)">
 
             <a><i class="fas fa-heart coracao"></i>POPULARES</a>
 
           </li>
 
-          <li  v-on:click="metodofilmes(maisVotados)">
+          <li  v-on:click="metodofilmes(maisVotados,1)">
 
             <a><i class="fas fa-star estrela"></i>MAIS VOTADO</a>
 
           </li>
-          <li v-on:click="metodofilmes(proximos)">
+          <li v-on:click="metodofilmes(proximos,1)">
 
             <a ><i class="fas fa-hourglass tempo"></i>PRÒXIMOS</a>
 
@@ -71,6 +71,7 @@
  <div>
         <b-pagination
             :total="total"
+            v-on:change="metodofilmes(atual,current)"
             v-model="current"
             :range-before="rangeBefore"
             :range-after="rangeAfter"
@@ -90,11 +91,6 @@
         </section>
        
       </div>
-
-
-
-
-
     </div>
   </div>
 </template>
@@ -110,10 +106,10 @@ export default {
       proximos:'upcoming',
       error: false,
       loading: false,
+atual:'',
 
-
-        total: 200,
-                current: 10,
+                total: 200,
+                current: 1,
                 perPage: 10,
                 rangeBefore: 3,
                 rangeAfter: 3,
@@ -128,12 +124,19 @@ export default {
   name: "Api",
   components: {},
   methods:{
-       metodofilmes(status){
+       metodofilmes(status,pagina){
+             
           this.loading = true;
+          this.atual = status;
+          this.current = pagina;
+      console.log("atual status = " + this.atual )
+          console.log("current = " + this.current )
+           console.log("oq veio da pagina = " + pagina )
+
 axios     
         // "https://api.themoviedb.org/3/discover/movie?api_key=553bdd8a7c40214943be5b047025dbb9&language=en-US&sort_by="+ status +".desc&include_adult=false&include_video=false&page=1"
 
-      .get("https://api.themoviedb.org/3/movie/"+ status +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9&page=1")
+      .get("https://api.themoviedb.org/3/movie/"+ status +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9&page="+ pagina)
 
         
       .then((r) => {
@@ -147,7 +150,7 @@ axios
       });
    }},
   mounted() {
-    this.metodofilmes(this.populares);
+    this.metodofilmes(this.populares,1);
   },
 };
 </script>
