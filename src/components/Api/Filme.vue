@@ -42,20 +42,99 @@
           <div v-if="error" >
             Desculpe, informações indisponiveis
           </div>
-
-
-
-
-
         <section class="section has-background-success">
-          <div  class="custom-linha">
 
-            <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
+        <div v-if="filmesId"  class="custom-linha-filme">
+             <div class="custom-coluna-filme"> 
               <div class="card">
                 <div class="card-image">
-                  <figure class="image">
-                    <img :src="'https://image.tmdb.org/t/p/w500/' + filme.poster_path" alt="Placeholder image"/>
-                  </figure>
+                  <figure  class="image">
+                    <img v-if="detalhefilme.poster_path" :src="'https://image.tmdb.org/t/p/w500/' + detalhefilme.poster_path" alt="Placeholder image"/>
+                     <img v-else  src="../../assets/not_found.svg" alt="Placeholder image"/>
+                  </figure> 
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-6">{{detalhefilme.title}}</p>
+                      <p class="subtitle is-6">{{detalhefilme.vote_average}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+
+
+
+              <div class="custom-coluna-filme-detalhes"> 
+                <h1>{{detalhefilme.title}}</h1>
+                <div>
+                 <!-- <p>{{detalhefilme.genres[0].name}} : {{detalhefilme.genres[1].name}}</p> -->
+                 
+
+<!-- Você está recebendo esse erro porque alguns dos objetos têm sight.photosas undefined. Você pode adicionar uma verificação como esta antes de acessar o índice zero:
+
+<div @click='selectSight(index)' v-for='(sight, index) in sights'>
+    {{ sight.name }}
+    {{ sight.photos && sight.photos.length > 0 ? sight.photos[0].photo_reference : '' }}
+</div> -->
+    <p>{{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[0].name : ''}} : {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[1].name : ''}} </p> 
+                  <p>A sinopse</p>
+                   <p>{{detalhefilme.overview}}</p>
+              </div>
+            </div>
+
+
+  <!-- <div  class="custom-linha">
+            <div  v-for="filme in recomendados.results" :key="filme.id" class="custom-coluna">
+              <div v-on:click="metodofilmesId(filme.id)" class="card">
+                <div class="card-image">
+                  <figure  class="image">
+                    <img v-if="filme.poster_path" :src="'https://image.tmdb.org/t/p/w500/' + filme.poster_path" alt="Placeholder image"/>
+
+                     <img v-else  src="../../assets/not_found.svg" alt="Placeholder image"/>
+                  </figure> 
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-6">{{filme.title}}</p>
+                      <p class="subtitle is-6">{{filme.vote_average}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+
+
+
+
+          </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div v-else class="custom-linha">
+            <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
+              <div v-on:click="metodofilmesId(filme.id)" class="card">
+                <div class="card-image">
+                  <figure  class="image">
+                    <img v-if="filme.poster_path" :src="'https://image.tmdb.org/t/p/w500/' + filme.poster_path" alt="Placeholder image"/>
+
+                     <img v-else  src="../../assets/not_found.svg" alt="Placeholder image"/>
+                  </figure> 
                 </div>
                 <div class="card-content">
                   <div class="media">
@@ -68,7 +147,7 @@
               </div>
             </div>
           </div>   
- <div>
+         <div>
         <b-pagination
             :total="total"
             v-on:change="metodofilmes(atual,current)"
@@ -100,6 +179,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      detalhefilme:{},
+      // recomendados:{},
       filmes:{},
        populares:'popular',
       maisVotados:'top_rated',
@@ -107,10 +188,10 @@ export default {
       error: false,
       loading: false,
       atual:'',
-
+      filmesId: false,
                 total: '',
                 current: 1,
-                perPage: 10,
+                perPage: 20,
                 rangeBefore: 3,
                 rangeAfter: 3,
                 order: 'is-centered',
@@ -124,8 +205,67 @@ export default {
   name: "Api",
   components: {},
   methods:{
+
+    metodofilmesId(id){
+     this.filmesId = true;
+     this.current = 1;
+      this.loading = true;
+
+
+     console.log(this.filmesId)
+     console.log(id);
+
+
+          //this.atual = status;
+//this.current = pagina;
+
+axios     
+
+      .get("https://api.themoviedb.org/3/movie/"+ id +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9")  
+      .then((r) => {
+        this.detalhefilme = r.data;
+       this.total = this.detalhefilme.total_results; 
+      })
+      .catch((error) => {
+        this.error = true;  
+        
+      })
+      .finally(() => {
+        this.loading = false;
+        
+      });
+  // axios     
+
+
+  //  .get("https://api.themoviedb.org/3/movie/"+ id +"/recommendations?language=pt-BR&api_key=acff09132ee8b54bee9960d2117ceea8&page=1")
+   
+
+        
+  //     .then((r) => {
+  //       this.recomendados = r.data;
+  //   console.log(recomendados);
+  //       this.total = this.recomendados.total_results; 
+  // console.log("recomendados" +this.recomendados.total_results)
+  //       console.log("total" +total)
+  
+  //     })
+  //     .catch((error) => {
+  //       this.error = true;
+  //        console.log(this.total)
+  //        console.log(this.total)
+  //            console.log("o erro foi no 3 metodo")
+  //     })
+  //     .finally(() => {
+  //       this.loading = false;
+        
+  //     });
+
+
+
+
+    },
        metodofilmes(status,pagina){
-             
+          this.filmesId = false;
           this.loading = true;
           this.atual = status;
           this.current = pagina;
@@ -138,10 +278,16 @@ axios
         
       .then((r) => {
         this.filmes = r.data;
-        this.total = this.filmes.total_pages; 
+        this.total = this.filmes.total_results; 
+         console.log("total de paginas " + this.filmes.total_results); 
+         console.log("sessao atual  " + this.atual); 
+           console.log("variavel total " + this.current); 
+          console.log("pagina atual " + this.current); 
+          console.log("-------------------------------------------------------------------------------- " ); 
       })
       .catch((error) => {
         this.error = true;
+        console.log("o erro foi no primeiro metodo")
       })
       .finally(() => {
         this.loading = false;
@@ -184,11 +330,36 @@ h2 {
 .tempo {
   color: rgb(114, 67, 221);
 }
+
 .custom-linha {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.custom-linha-filme{
+   display: flex;
+  flex-wrap: wrap;
+ 
+}
+.custom-coluna-filme {
+     
+      box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
+       /*box-shadow: 0rem 2rem 5rem rgb(255 255 255 / 30%);*/
+  margin-bottom: 5%!important;
+  max-height: 500px;
+  width: 30%;
+  max-width: 300px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+.custom-coluna-filme-detalhes{
+  width: 70%;
+  background: rgb(248, 248, 248);
+}
+
 .custom-coluna {
      
       box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
@@ -211,6 +382,7 @@ h2 {
 }
 .card {
   border-radius: 5%;
+  cursor: pointer;
 }
 .card-content{
 height: 70px!important;
