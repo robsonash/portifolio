@@ -64,11 +64,25 @@
               </div>
             </div>  
 
-
-
               <div class="custom-coluna-filme-detalhes"> 
-                <h1>{{detalhefilme.title}}</h1>
+                <div class="titulo">
+                <h1 class="is-size-2">{{detalhefilme.title}}</h1>
+                </div>
                 <div>
+                  <div class="clasificacaoLinguagem">
+<div class="classificação">  
+    <i class=" estrela fas fa-star"></i>
+    <i class="estrela fas fa-star"></i>
+    <i class="estrela fas fa-star"></i>
+    <i class="estrela fas fa-star"></i>
+    <i class="estrela fas fa-star"></i>
+    <h6> {{ detalhefilme.vote_average}}</h6>
+</div>
+<div class="linguagem-original">
+    <h6>{{detalhefilme.spoken_languages && detalhefilme.spoken_languages.length > 0 ? detalhefilme.spoken_languages[0].name : ''}} / {{detalhefilme.runtime}} MIN</h6>
+</div>
+</div>
+                  
                  <!-- <p>{{detalhefilme.genres[0].name}} : {{detalhefilme.genres[1].name}}</p> -->
                  
 
@@ -78,15 +92,61 @@
     {{ sight.name }}
     {{ sight.photos && sight.photos.length > 0 ? sight.photos[0].photo_reference : '' }}
 </div> -->
-    <p>{{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[0].name : ''}} : {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[1].name : ''}} </p> 
-                  <p>A sinopse</p>
-                   <p>{{detalhefilme.overview}}</p>
+<div class="generoVolta">
+<p class="is-size-6">Gênero</p>
+
+
+<div class="generoName">
+<div  v-for="genero in detalhefilme.genres" :key="genero.id">
+  <i class="bolinha fas fa-dot-circle"></i> {{genero.name}}
+</div></div>
+    <!-- <p v-if="detalhefilme.genres[0].name" class="is-size-5"><i class="bolinha fas fa-dot-circle"></i> {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[0].name : ''}}  </p> 
+     <p  v-if="detalhefilme.genres[1].name" class="is-size-5"><i class="bolinha fas fa-dot-circle"></i> {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[1].name : ''}}</p>  -->
+    </div>
+                  <p class="is-size-6">A SINOPSE</p>
+                   <p class="is-size-6">{{detalhefilme.overview}}</p>
               </div>
-            </div>
+             <div class="botoes"> 
+                <button class="button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
+  <i class="fas fa-arrow-left"></i>
+    </span>Home</button>
+                <a :href="link + detalhefilme.id" target="_blank"> <button class=" button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
+   <i class="fas fa-link"></i>
+    </span>TMDB</button></a>
+               <button @click="isImageModalActive = true" class="button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
+    <i class="fas fa-play"></i>
+    </span>Trailer</button>
+             </div>
+               <b-modal v-model="isImageModalActive">
+     
+             
+               <iframe width="800" height="455" :src="this.videos + this.videoarrumadu()"
+               frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            
+        </b-modal>
+                 </div>
+<div class="colunm recomendados">
+ 
+<div class="custom-linha recomenlinha"><h1>FILMES RECOMENDADOS</h1>
+    </div>   </div>
 
 
-  <!-- <div  class="custom-linha">
+
+
+
+
+
+
+
+
+
+
+
+
+  <div  class="custom-linha">
+    
             <div  v-for="filme in recomendados.results" :key="filme.id" class="custom-coluna">
+              
               <div v-on:click="metodofilmesId(filme.id)" class="card">
                 <div class="card-image">
                   <figure  class="image">
@@ -105,7 +165,7 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
 
 
@@ -139,7 +199,7 @@
                 <div class="card-content">
                   <div class="media">
                     <div class="media-content">
-                      <p class="title is-6">{{filme.title}}</p>
+                      <p class="title is-6 ">{{filme.title}}</p>
                       <p class="subtitle is-6">{{filme.vote_average}}</p>
                     </div>
                   </div>
@@ -149,8 +209,28 @@
           </div>   
          <div>
         <b-pagination
+        v-if="recomendadoPag === false"
             :total="total"
             v-on:change="metodofilmes(atual,current)"
+            v-model="current"
+            :range-before="rangeBefore"
+            :range-after="rangeAfter"
+            :order="order"
+            :size="size"
+            :simple="isSimple"
+            :rounded="isRounded"
+            :per-page="perPage"
+            :icon-prev="prevIcon"
+            :icon-next="nextIcon"
+            aria-next-label="Next page"
+            aria-previous-label="Previous page"
+            aria-page-label="Page"
+            aria-current-label="Current page">
+        </b-pagination>
+          <b-pagination
+        v-else
+            :total="total"
+            v-on:change="metodofilmesrecomendados(id,current)"
             v-model="current"
             :range-before="rangeBefore"
             :range-after="rangeAfter"
@@ -179,15 +259,21 @@ import axios from "axios";
 export default {
   data() {
     return {
+       isImageModalActive: false,
+      id:'',
       detalhefilme:{},
-      // recomendados:{},
+       recomendados:{},
       filmes:{},
+      video:{},
        populares:'popular',
       maisVotados:'top_rated',
       proximos:'upcoming',
+      videos:"https://www.youtube.com/embed/",
       error: false,
       loading: false,
       atual:'',
+      recomendadoPag:false,
+      link:"https://www.themoviedb.org/movie/",
       filmesId: false,
                 total: '',
                 current: 1,
@@ -205,66 +291,107 @@ export default {
   name: "Api",
   components: {},
   methods:{
+videoarrumadu(){
+return this.video.results && this.video.results.length > 0 ? this.video.results[0].key : ''
+},
 
     metodofilmesId(id){
+      this.video = {};
+            this.error = false;
+       this.atual = '';
+      this.id = id;
+      this.recomendadoPag = true;
      this.filmesId = true;
      this.current = 1;
       this.loading = true;
-
-
-     console.log(this.filmesId)
-     console.log(id);
-
-
-          //this.atual = status;
-//this.current = pagina;
-
 axios     
-
       .get("https://api.themoviedb.org/3/movie/"+ id +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9")  
       .then((r) => {
-        this.detalhefilme = r.data;
-       this.total = this.detalhefilme.total_results; 
+       this.detalhefilme = r.data;
       })
       .catch((error) => {
-        this.error = true;  
-        
+         this.loading = false;
+        this.error = true;        
+      })
+      .finally(() => {
+        this.loading = false;      
+      });
+axios     
+      .get("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=553bdd8a7c40214943be5b047025dbb9")  
+      .then((r) => {
+       this.video = r.data;
+      })
+      .catch((error) => {
+         this.loading = false;
+        this.error = true;        
+      })
+      .finally(() => {
+        this.loading = false;      
+      });
+     this.metodofilmesrecomendados(this.id,1)
+
+    },
+
+
+
+
+       metodofilmesrecomendados(id,pagina){
+         this.filmes = {};
+
+      this.error = false;
+      this.loading = true;
+      this.current = pagina;
+      console.log(" current " + pagina);
+console.log(" current " + this.current);
+    //        console.log(" id antes da requisição " + id)
+    // console.log("valor total antes da requisição " + this.total)
+   
+  axios     
+
+   .get("https://api.themoviedb.org/3/movie/"+ id +"/recommendations?language=pt-BR&api_key=acff09132ee8b54bee9960d2117ceea8&page="+ pagina)
+   
+      .then((r) => {
+        this.recomendados = r.data;
+         this.total = this.recomendados.total_results; 
+   console.log("recomendados total_results" +this.total)
+     console.log("depois current " + pagina);
+console.log("depois current " + this.current);
+  
+      })
+      .catch((error) => {
+         this.loading = false;
+        this.error = true;
+        //  console.log("erro valor total" + this.total)
+        //   console.log("erro id " + id)
+        //      console.log("o erro foi no 3 metodo")
       })
       .finally(() => {
         this.loading = false;
         
       });
-  // axios     
-
-
-  //  .get("https://api.themoviedb.org/3/movie/"+ id +"/recommendations?language=pt-BR&api_key=acff09132ee8b54bee9960d2117ceea8&page=1")
-   
-
-        
-  //     .then((r) => {
-  //       this.recomendados = r.data;
-  //   console.log(recomendados);
-  //       this.total = this.recomendados.total_results; 
-  // console.log("recomendados" +this.recomendados.total_results)
-  //       console.log("total" +total)
-  
-  //     })
-  //     .catch((error) => {
-  //       this.error = true;
-  //        console.log(this.total)
-  //        console.log(this.total)
-  //            console.log("o erro foi no 3 metodo")
-  //     })
-  //     .finally(() => {
-  //       this.loading = false;
-        
-  //     });
 
 
 
 
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        metodofilmes(status,pagina){
+         this.detalhefilme = '';
+           this.recomendados = '';
+           this.recomendadoPag = false;
           this.filmesId = false;
           this.loading = true;
           this.atual = status;
@@ -286,6 +413,7 @@ axios
           console.log("-------------------------------------------------------------------------------- " ); 
       })
       .catch((error) => {
+         this.loading = false;
         this.error = true;
         console.log("o erro foi no primeiro metodo")
       })
@@ -298,6 +426,33 @@ axios
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
 h2 {
   color: #0000ff;
@@ -358,6 +513,7 @@ h2 {
 .custom-coluna-filme-detalhes{
   width: 70%;
   background: rgb(248, 248, 248);
+  height: 500px;
 }
 
 .custom-coluna {
@@ -399,6 +555,60 @@ height: 70px!important;
 
    height: 400px!important;
 }
+.genero{
+  display: inline-block;
+}
+.classificacao{
+  justify-content: center;
+    display: flex;
+}
+.linguagem-original{
+   font-family: Montserrat, sans-serif;
+    text-transform: uppercase;
+        line-height: normal;
+}
+.generoVolta{
+  display: flex;
+  flex-direction: column;
+}
+.generoName{
+  font-family: Montserrat, sans-serif;
+  text-transform: uppercase;
+}
+.bolinha{
+  color: #9aa7ad;
+
+
+} 
+.titulo{
+   font-family: Montserrat, sans-serif;
+   text-transform: uppercase;
+}
+.button{
+  margin: 10px!important;
+}
+.botoes{
+  
+  padding: 10px;
+    font-family: Montserrat, sans-serif;
+}.iconeBotao{
+
+  margin-right:15px!important ;
+}
+.recomendados{
+      font-size: 30px;
+    display: contents;
+}
+.recomenlinha{
+  width: 100%;
+}
+
+
+
+
+
+
+
 @media screen and (max-width: 1024px) {
   .menu-list {
     margin-left: 50px;
