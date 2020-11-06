@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+ 
     <section class="hero is-danger">
       <h1 class="title hero is-primary is-medium">Filmes</h1>
     </section>
@@ -21,9 +22,29 @@
           </li>
           <li v-on:click="metodofilmes(proximos,1)">
 
-            <a ><i class="fas fa-hourglass tempo"></i>PRÒXIMOS</a>
+            <a><i class="fas fa-hourglass tempo"></i>PRÒXIMOS</a>
 
           </li>
+          <!-- <li class="inputfilme">
+<div class="field">
+  <div class="control">
+    <input v-model="idinput" class="input" type="text"   placeholder="Procure o filme">
+  </div>
+</div>
+</li> -->
+          
+          
+     <li class="liprocura">
+            <b-field label="Search..." :label-position="labelPosition">
+            <b-input v-model="idinput" class="liprocurainput" placeholder="Search..."  type="search"></b-input>
+            <p class="liprocurap control">
+              <b-button v-if="idinput.length > 0"  v-on:click="metodoprocurafilmes(idinput,1)" class="liprocurabutton button is-primary">Search</b-button>
+                <b-button v-else v-on:click="metodoprocurafilmes(this.idinput,1)" disabled class="liprocurabutton button is-primary">Search</b-button>
+            </p>
+        </b-field>
+      </li>
+
+
         </ul>
       </aside>
 
@@ -143,7 +164,7 @@
 
 
 
-  <div  class="custom-linha">
+           <div  class="custom-linha">
     
             <div  v-for="filme in recomendados.results" :key="filme.id" class="custom-coluna">
               
@@ -165,17 +186,32 @@
                 </div>
               </div>
             </div>
-          </div>
-
-
-
-
-
-
+           </div>
           </div>  
 
 
 
+  <div v-else-if="procuradoativo" class="custom-linha">
+            <div  v-for="filme in filmeprocurado.results" :key="filme.id" class="custom-coluna">
+              <div v-on:click="metodofilmesId(filme.id)" class="card">
+                <div class="card-image">
+                  <figure  class="image">
+                    <img v-if="filme.poster_path" :src="'https://image.tmdb.org/t/p/w500/' + filme.poster_path" alt="Placeholder image"/>
+
+                     <img v-else  src="../../assets/not_found.svg" alt="Placeholder image"/>
+                  </figure> 
+                </div>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-6 ">{{filme.title}}</p>
+                      <p class="subtitle is-6">{{filme.vote_average}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
 
 
 
@@ -186,7 +222,27 @@
 
 
 
-          <div v-else class="custom-linha">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div v-else-if="normalfilme = true" class="custom-linha">
             <div  v-for="filme in filmes.results" :key="filme.id" class="custom-coluna">
               <div v-on:click="metodofilmesId(filme.id)" class="card">
                 <div class="card-image">
@@ -209,7 +265,7 @@
           </div>   
          <div>
         <b-pagination
-        v-if="recomendadoPag === false"
+        v-if="normalfilme === true"
             :total="total"
             v-on:change="metodofilmes(atual,current)"
             v-model="current"
@@ -228,7 +284,26 @@
             aria-current-label="Current page">
         </b-pagination>
           <b-pagination
-        v-else
+        v-else-if="procuradoativo === true"
+            :total="total"
+            v-on:change="metodoprocurafilmes(id,current)"
+            v-model="current"
+            :range-before="rangeBefore"
+            :range-after="rangeAfter"
+            :order="order"
+            :size="size"
+            :simple="isSimple"
+            :rounded="isRounded"
+            :per-page="perPage"
+            :icon-prev="prevIcon"
+            :icon-next="nextIcon"
+            aria-next-label="Next page"
+            aria-previous-label="Previous page"
+            aria-page-label="Page"
+            aria-current-label="Current page">
+        </b-pagination>
+          <b-pagination
+        v-else-if="recomendadoPag === true"
             :total="total"
             v-on:change="metodofilmesrecomendados(id,current)"
             v-model="current"
@@ -259,22 +334,27 @@ import axios from "axios";
 export default {
   data() {
     return {
+      labelPosition: 'on-border',
        isImageModalActive: false,
       id:'',
-      detalhefilme:{},
-       recomendados:{},
-      filmes:{},
-      video:{},
-       populares:'popular',
+      idinput:'',
+      populares:'popular',
       maisVotados:'top_rated',
       proximos:'upcoming',
       videos:"https://www.youtube.com/embed/",
       error: false,
       loading: false,
       atual:'',
-      recomendadoPag:false,
       link:"https://www.themoviedb.org/movie/",
+      detalhefilme:{},
+      recomendados:{},
+      filmes:{},
+      video:{},
+      filmeprocurado:{},
       filmesId: false,
+      normalfilme:true,
+      recomendadoPag:false,
+      procuradoativo:false,
                 total: '',
                 current: 1,
                 perPage: 20,
@@ -295,17 +375,54 @@ videoarrumadu(){
 return this.video.results && this.video.results.length > 0 ? this.video.results[0].key : ''
 },
 
-    metodofilmesId(id){
+metodoprocurafilmes(id,pagina){
+      this.procuradoativo = true;
+      this.normalfilme = false;
+      this.recomendadoPag = false;
+      this.filmesId = false;
       this.video = {};
-            this.error = false;
-       this.atual = '';
+      this.error = false;
+      this.atual = '';
       this.id = id;
-      this.recomendadoPag = true;
-     this.filmesId = true;
-     this.current = 1;
+      this.current = pagina;
       this.loading = true;
+axios    
+      .get("https://api.themoviedb.org/3/search/movie?language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9&query="+ id +"&page=" + pagina)  
+      .then((r) => {
+       this.filmeprocurado = r.data;
+       this.total = this.filmeprocurado.total_results;
+      })
+      .catch((error) => {
+         this.loading = false;
+        this.error = true;        
+      })
+      .finally(() => {
+        this.loading = false;      
+      });
+
+
+},
+
+
+
+
+
+
+
+
+    metodofilmesId(id){
+         this.normalfilme = false;
+        this.procuradoativo = false;
+        
+        this.filmesId = true;
+        this.video = {};
+        this.error = false;
+        this.atual = '';
+        this.id = id;
+        this.current = 1;
+        this.loading = true;
 axios     
-      .get("https://api.themoviedb.org/3/movie/"+ id +"?&language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9")  
+      .get("https://api.themoviedb.org/3/movie/"+ id +"?language=pt-BR&api_key=553bdd8a7c40214943be5b047025dbb9")  
       .then((r) => {
        this.detalhefilme = r.data;
       })
@@ -336,8 +453,12 @@ axios
 
 
        metodofilmesrecomendados(id,pagina){
-         this.filmes = {};
+      this.recomendadoPag = true;
+  
 
+
+
+      this.filmes = {};
       this.error = false;
       this.loading = true;
       this.current = pagina;
@@ -389,9 +510,12 @@ console.log("depois current " + this.current);
 
 
        metodofilmes(status,pagina){
-         this.detalhefilme = '';
-           this.recomendados = '';
-           this.recomendadoPag = false;
+          this.procuradoativo = false;
+          this.recomendadoPag = false;
+           this.normalfilme = true;
+
+          this.detalhefilme = '';
+          this.recomendados = '';      
           this.filmesId = false;
           this.loading = true;
           this.atual = status;
@@ -464,7 +588,7 @@ h2 {
   padding-top: 60px;
 }
 .menu-list {
-  padding-top: 100px;
+  padding-top: 100px;max-width: 250px;
 }
 
 .menu-list li {
@@ -602,6 +726,53 @@ height: 70px!important;
 .recomenlinha{
   width: 100%;
 }
+.inputfilme{
+  border: none!important;
+
+  background-color: black;
+}
+
+
+.inputfilme input {
+      border: none!important;
+    border-radius: 50%!important;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+ .inputfilme ::-webkit-input-placeholder {
+
+   color: white!important;
+}
+ .inputfilme input:focus::-webkit-input-placeholder {
+   color: transparent!important;
+}
+.liprocura {
+border: 0!important;
+border-radius: 0!important;
+}    
+.liprocurainput {
+
+}
+ .liprocurap {
+
+   }  
+ .liprocurabutton {
+margin: 0!important;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
