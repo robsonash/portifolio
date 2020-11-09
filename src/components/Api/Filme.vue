@@ -1,9 +1,14 @@
 <template>
+<div>
   <div class="container">
  
-    <section class="hero is-danger">
+<section class="hero is-danger">
       <h1 class="title hero is-primary is-medium">Filmes</h1>
     </section>
+
+  </div>
+   <div>
+    
     <div class="columns is-desktop">
       <aside class="menu">
         <p class="menu-label">CATEGORIAS</p>
@@ -114,7 +119,7 @@
     {{ sight.photos && sight.photos.length > 0 ? sight.photos[0].photo_reference : '' }}
 </div> -->
 <div class="generoVolta">
-<p class="is-size-6">Gênero</p>
+<p class="generotitulo is-size-6">Gênero</p>
 
 
 <div class="generoName">
@@ -123,9 +128,11 @@
 </div></div>
     <!-- <p v-if="detalhefilme.genres[0].name" class="is-size-5"><i class="bolinha fas fa-dot-circle"></i> {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[0].name : ''}}  </p> 
      <p  v-if="detalhefilme.genres[1].name" class="is-size-5"><i class="bolinha fas fa-dot-circle"></i> {{detalhefilme.genres && detalhefilme.genres.length > 0 ? detalhefilme.genres[1].name : ''}}</p>  -->
+    </div> 
+    <div class="sinopse">
+                  <p class="sinopsea is-size-6">A SINOPSE</p>
+                   <p class="sinopseb is-size-6">{{detalhefilme.overview}}</p>
     </div>
-                  <p class="is-size-6">A SINOPSE</p>
-                   <p class="is-size-6">{{detalhefilme.overview}}</p>
               </div>
              <div class="botoes"> 
                 <button class="button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
@@ -326,6 +333,7 @@
        
       </div>
     </div>
+ </div>
   </div>
 </template>
 <script>
@@ -614,6 +622,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+      width: 100%;
 }
 
 .custom-linha-filme{
@@ -654,7 +663,7 @@ h2 {
   font-size: 30px;
 }
 .section {
-  /*background-color: #000000 !important;*/
+ background-color: #ffffff !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   margin-top: 30px;
@@ -679,23 +688,32 @@ height: 70px!important;
 
    height: 400px!important;
 }
-.genero{
-  display: inline-block;
-}
-.classificacao{
+
+.classificacao{margin-bottom: 10px;
   justify-content: center;
     display: flex;
 }
-.linguagem-original{
+.linguagem-original{margin-bottom: 10px;
    font-family: Montserrat, sans-serif;
     text-transform: uppercase;
         line-height: normal;
 }
+.genero{
+  display: inline-block;
+}
+.generotitulo{
+      position: relative;
+    font-weight: 700;
+    margin-right: 10px;
+}
 .generoVolta{
   display: flex;
-  flex-direction: column;
+ justify-content: center;
+    text-transform: uppercase;
+    display: flex;margin-bottom: 10px;
 }
 .generoName{
+  display: flex;
   font-family: Montserrat, sans-serif;
   text-transform: uppercase;
 }
@@ -719,6 +737,17 @@ height: 70px!important;
 
   margin-right:15px!important ;
 }
+
+.sinopsea{
+    background-color: #5584ad40;
+    text-decoration: underline;
+    margin-bottom: 10px;
+    color: #249191;
+}
+
+
+
+
 .recomendados{
       font-size: 30px;
     display: contents;
@@ -750,13 +779,7 @@ height: 70px!important;
 .liprocura {
 border: 0!important;
 border-radius: 0!important;
-}    
-.liprocurainput {
-
-}
- .liprocurap {
-
-   }  
+}     
  .liprocurabutton {
 margin: 0!important;
     }
@@ -778,8 +801,23 @@ margin: 0!important;
 
 
 
-
-
+@media screen and (max-width: 1266px) {
+  .custom-coluna-filme-detalhes{
+    display: inline;width: 100%;
+  }
+  .custom-coluna-filme{
+    /* margin-left: 40%!important; */
+  }
+  .menu-list {
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 0;
+  }
+  .image img{
+  width: none!important;
+   height: 400px!important;
+}
+}
 @media screen and (max-width: 1024px) {
   .menu-list {
     margin-left: 50px;
@@ -792,6 +830,10 @@ margin: 0!important;
 }
 }
 @media screen and (max-width: 700px) {
+   .custom-coluna-filme{
+    display: contents;
+    width: 90%;
+  }
   .custom-coluna {
     width: 40%;
     max-width: 40%;
@@ -803,11 +845,23 @@ margin: 0!important;
   width: none!important;
    height: 400px!important;
   
+}iframe{
+  width: 100%!important;
 }
 }
 
 
 @media screen and (max-width: 500px) {
+  .generoVolta{
+        flex-direction: column;
+  }
+  .custom-coluna-filme-detalhes{
+    display: table;
+  }
+  .custom-coluna-filme{
+    display: contents;
+    width: 90%;
+  }
   .custom-coluna {
     width: 90%;
       margin-bottom: 50%!important;
@@ -817,6 +871,8 @@ margin: 0!important;
   width: none!important;
    height: auto!important;
 }
-
+iframe{
+  width: 100%!important;
+}
 }
 </style>
