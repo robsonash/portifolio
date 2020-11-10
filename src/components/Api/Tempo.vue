@@ -70,7 +70,7 @@
           
             <div  v-if="atual">
               <img
-                :src="'http://openweathermap.org/img/wn/' + tempo2.weather[0].icon + '@2x.png' " /><br />
+                :src="'https://openweathermap.org/img/wn/' + tempo2.weather[0].icon + '@2x.png' " /><br />
              <span v-if="selecionado">Estado:{{ selecionado }}</span><br>
               <span>Cidade:{{ tempo2.name }}</span
               ><br />
@@ -144,7 +144,7 @@ export default {
          this.loading = true;
       axios
         .get(
-          "http://api.openweathermap.org/data/2.5/weather?q=" + this.atual + "&lang=pt_br&units=metric&appid=54521ad49f6786d40c7ad2d72fc42d32"
+          "https://api.openweathermap.org/data/2.5/weather?q=" + this.atual + "&lang=pt_br&units=metric&appid=54521ad49f6786d40c7ad2d72fc42d32"
         )
 
         .then((res) => {
