@@ -166,7 +166,8 @@ export default {
          this.loading = true;
       axios
         .get(
-          "https://cors-anywhere.herokuapp.com/educacao.dadosabertosbr.com/api/cidades/" + this.selecionado
+          // "https://cors-anywhere.herokuapp.com/educacao.dadosabertosbr.com/api/cidades/" + this.selecionado
+               "http://educacao.dadosabertosbr.com/api/cidades/" + this.selecionado
         )
 
         .then((resposta) => {
