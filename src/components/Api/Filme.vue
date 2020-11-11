@@ -596,7 +596,8 @@ h2 {
   padding-top: 60px;
 }
 .menu-list {
-  padding-top: 100px;max-width: 250px;
+  padding-top: 100px;
+  max-width: 250px;
 }
 
 .menu-list li {
@@ -604,7 +605,13 @@ h2 {
   border-radius: 50px;
   margin: 10px;
 }
-.menu-list li a i {
+.menu-list a{
+  border-radius: 50px;
+    color: #4a4a4a;
+    display: block;
+    padding: .5em .75em;
+}
+.menu-list li a i{
   float: left;
   padding-right: 30px;
 }
@@ -707,15 +714,17 @@ height: 70px!important;
     margin-right: 10px;
 }
 .generoVolta{
-  display: flex;
+  display: flex!important;
  justify-content: center;
     text-transform: uppercase;
-    display: flex;margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 .generoName{
   display: flex;
+  justify-content: center;
   font-family: Montserrat, sans-serif;
   text-transform: uppercase;
+  flex-wrap: wrap;
 }
 .bolinha{
   color: #9aa7ad;
