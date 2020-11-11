@@ -158,7 +158,7 @@
     </div>
               </div>
              <div class="botoes"> 
-                <button class="button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
+                <button v-on:click="metodofilmes(populares,1)" class="button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
   <i class="fas fa-arrow-left"></i>
     </span>Home</button>
                 <a :href="link + detalhefilme.id" target="_blank"> <button class=" button is-medium   is-rounded"> <span class="iconeBotao icon is-small">
