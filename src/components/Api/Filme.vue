@@ -70,6 +70,28 @@
           </div>
         <section class="section has-background-success">
 
+
+
+
+<div class="colunm recomendados">
+<div v-if="this.atual === this.populares" class="custom-linha recomenlinha">
+  <h1>FILMES RECOMENDADOS</h1>
+    </div>
+    <div v-else-if="this.atual === this.maisVotados" class="custom-linha recomenlinha">
+  <h1>FILMES MAIS VOTADOS</h1>
+    </div>
+    <div v-else-if="this.atual === this.proximos" class="custom-linha recomenlinha">
+  <h1>LANÇAMENTOS</h1>
+    </div>
+
+    </div>
+
+
+
+
+
+
+
         <div v-if="filmesId"  class="custom-linha-filme">
              <div class="custom-coluna-filme"> 
               <div class="card">
@@ -90,7 +112,8 @@
               </div>
             </div>  
 
-              <div class="custom-coluna-filme-detalhes"> 
+              <div  class="custom-coluna-filme-detalhes"> 
+                <a href="#" id="scroll"></a>
                 <div class="titulo">
                 <h1 class="is-size-2">{{detalhefilme.title}}</h1>
                 </div>
@@ -439,7 +462,8 @@ axios
         this.error = true;        
       })
       .finally(() => {
-        this.loading = false;      
+        this.loading = false;    
+         window.location.href='#scroll';  
       });
 axios     
       .get("https://api.themoviedb.org/3/movie/" + id + "/videos?api_key=553bdd8a7c40214943be5b047025dbb9")  
@@ -518,6 +542,7 @@ console.log("depois current " + this.current);
 
 
        metodofilmes(status,pagina){
+       
           this.procuradoativo = false;
           this.recomendadoPag = false;
            this.normalfilme = true;
@@ -543,6 +568,7 @@ axios
            console.log("variavel total " + this.current); 
           console.log("pagina atual " + this.current); 
           console.log("-------------------------------------------------------------------------------- " ); 
+         
       })
       .catch((error) => {
          this.loading = false;
@@ -551,6 +577,7 @@ axios
       })
       .finally(() => {
         this.loading = false;
+          
       });
    }},
   mounted() {
