@@ -777,14 +777,16 @@ height: 70px!important;
    color: transparent!important;
 }
 .liprocura {
+
 border: 0!important;
 border-radius: 0!important;
 }     
  .liprocurabutton {
 margin: 0!important;
     }
-
-
+.liprocurap span{
+  color: white!important;
+}
 
 
 
@@ -805,9 +807,7 @@ margin: 0!important;
   .custom-coluna-filme-detalhes{
     display: inline;width: 100%;
   }
-  .custom-coluna-filme{
-    /* margin-left: 40%!important; */
-  }
+ 
   .menu-list {
     margin-left: 50px;
     margin-right: 50px;
@@ -823,14 +823,26 @@ margin: 0!important;
     margin-left: 50px;
     margin-right: 50px;
     padding: 0;
+     
+  max-width: 100%!important
   }
   .image img{
   width: none!important;
    height: 400px!important;
-}
+}.liprocura{
+    justify-content: center;
+    display: flex;
+  }.custom-linha-filme{
+    justify-content: center;
+  }.custom-coluna-filme{
+        
+    display: contents;
+    width: 100%;
+  }
 }
 @media screen and (max-width: 700px) {
    .custom-coluna-filme{
+        
     display: contents;
     width: 90%;
   }
@@ -840,6 +852,9 @@ margin: 0!important;
   }
   .menu-list {
     padding: 0;
+ 
+  max-width: 100%!important
+
   }
   .image img{
   width: none!important;
@@ -847,11 +862,19 @@ margin: 0!important;
   
 }iframe{
   width: 100%!important;
-}
+}.liprocura{
+    justify-content: center;
+    display: flex;
+  }.custom-linha-filme{
+    justify-content: center;
+  }
 }
 
 
 @media screen and (max-width: 500px) {
+  .custom-linha-filme{
+    justify-content: center;
+  }
   .generoVolta{
         flex-direction: column;
   }
@@ -862,10 +885,25 @@ margin: 0!important;
     display: contents;
     width: 90%;
   }
+  .column{
+    padding: 0!important;
+  }
+  .columns{
+    margin-left: 0!important;
+   margin-right: 0!important;
+  }
+  .pagination{
+        margin: 0!important;
+  }
+  .liprocura{
+    justify-content: center;
+    display: flex;
+  }
   .custom-coluna {
-    width: 90%;
-      margin-bottom: 50%!important;
-    max-width: 90%;
+
+    width:90%;
+      margin-bottom: 40%!important;
+    max-width: 100%;
   }
   .image img{
   width: none!important;
@@ -873,6 +911,9 @@ margin: 0!important;
 }
 iframe{
   width: 100%!important;
+}
+.menu-list{
+  max-width: 100%!important
 }
 }
 </style>
