@@ -1,6 +1,6 @@
 <template>
 <div class="container">
- <div class="notification custom">
+ <!-- <div class="notification custom">
      <b-carousel>
         <b-carousel-item v-for="(carousel, i) in carousels" :key="i">
             <section :class="`hero  is-medium is-${carousel.color}`">
@@ -11,12 +11,14 @@
             </section>
         </b-carousel-item>
     </b-carousel>
-  </div>
+  </div> -->
  <Portifolio/>
 </div>
 </template>
 <script>
 import Portifolio from '../HOME/Portifolio'
+import dna from '../../assets/dna.jpg'
+import robson from '../../assets/wa.jpg'
 
 export default {
    name: 'Home',
@@ -30,8 +32,8 @@ export default {
         return {
                test: 0,
                carousels: [
-                { imagem: "./../assets/dna.jpg", text: 'primary', color: 'primary' }
-                // { imagem: dna, text: 'info', color: 'info' },
+                { imagem: dna, text: 'primary', color: 'primary' },
+                 { imagem: robson, text: 'info', color: 'info' }
                 // { imagem: dna, text: 'success', color: 'success' },
                 // { imagem: dna, text: 'warning', color: 'warning' },
                 // { imagem: dna, text: 'danger', color: 'danger' },

@@ -1,19 +1,22 @@
 <template>
 <div>
   <div class="container">
- 
+
 <section class="hero is-danger">
       <h1 class="title hero is-primary is-medium">Filmes</h1>
     </section>
 
   </div>
    <div>
-    
-    <div class="columns is-desktop">
+  
+    <div  class="columns is-desktop">
       <aside class="menu">
         <p class="menu-label">CATEGORIAS</p>
         <ul class="menu-list">
           
+          <li class="botaocor"> 
+           <b-switch v-model="modoescuro">Mude de cor</b-switch>
+            </li>
           <li v-on:click="metodofilmes(populares,1)">
 
             <a><i class="fas fa-heart coracao"></i>POPULARES</a>
@@ -48,13 +51,8 @@
             </p>
         </b-field>
       </li>
-
-
         </ul>
       </aside>
-
-
-
       <div class="column">
          <div v-if="loading">
                 <b-loading v-model="loading" :can-cancel="true">
@@ -68,7 +66,23 @@
           <div v-if="error" >
             Desculpe, informações indisponiveis
           </div>
-        <section class="section has-background-success">
+
+
+
+
+
+        <!-- <section :style="this.customStyle" class="section has-background-success"> -->
+
+<!--mudando as cores-->
+    <section v-bind:style="{backgroundColor: this.backgroundsesao}" class="section has-background-success">
+
+
+
+
+
+
+
+
 
 
 
@@ -112,7 +126,19 @@
               </div>
             </div>  
 
-              <div  class="custom-coluna-filme-detalhes"> 
+
+
+<!-- mudando a as cores  -->
+              <div :style="{backgroundColor: this.backgrounddetalhe,color: this.detalhecor}" class="custom-coluna-filme-detalhes"> 
+       
+  
+       
+       
+       
+       
+       
+       
+       
                 <a href="#" id="scroll"></a>
                 <div class="titulo">
                 <h1 class="is-size-2">{{detalhefilme.title}}</h1>
@@ -396,11 +422,64 @@ export default {
                 isSimple: false,
                 isRounded: false,
                 prevIcon: 'chevron-left',
-                nextIcon: 'chevron-right'
+                nextIcon: 'chevron-right',
+                modoescuro:false,
+
+
+
+                backgroundsesao:"",
+                backgrounddetalhe:"",
+                detalhecor:"",
+                backgroundhtml:"",
+                backgroundmenu:""
+//                  <!-- cores #060606 para o html  -->
+//  <!-- cor do detalhe #5640406b -->
+//  <!-- menu #fbfbfb5e -->
+                // size: '',
+                // type: null,
+                // passiveType: null,
+                // isRounded: false,
+                // isOutlined: true,
+                // leftLabel: false,
     };
   },
   name: "Api",
   components: {},
+watch:{
+  modoescuro: function(){
+    if(this.modoescuro){
+
+      
+      this.backgroundsesao ="black!important",
+      this.backgrounddetalhe = "#5640406b!important",
+      this.detalhecor = "white!important",
+      this.backgroundhtml = "#060606!important",
+      this.backgroundmenu = "#fbfbfb5e!important"
+    }else{
+     this.backgroundsesao ="",
+      this.backgrounddetalhe = "",
+      this.detalhecor = "",
+      this.backgroundhtml = "",
+      this.backgroundmenu = ""
+
+
+    } 
+  }
+},
+// computed:{
+// customStyle () {
+//   if(this.modoescuro){
+//  return { 
+//    backgroundColor:this.backgroundsesao
+// }
+//   }
+
+//   }
+   
+
+// },
+
+
   methods:{
 videoarrumadu(){
 return this.video.results && this.video.results.length > 0 ? this.video.results[0].key : ''
@@ -613,6 +692,7 @@ axios
 
 
 <style>
+
 h2 {
   color: #0000ff;
 }
@@ -823,7 +903,10 @@ margin: 0!important;
 .liprocurap span{
   color: white!important;
 }
-
+.botaocor{
+  border: 0!important;
+  border-radius: 0!important;
+}
 
 
 
