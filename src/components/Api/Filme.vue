@@ -1,7 +1,6 @@
 <template>
 <div>
   <div class="container">
-
 <section class="hero is-danger">
       <h1 class="title hero is-primary is-medium">Filmes</h1>
     </section>
@@ -387,7 +386,7 @@
 </template>
 <script>
 import axios from "axios";
-
+import {EventBus} from '../../main.js'
 export default {
   data() {
     return {
@@ -446,7 +445,10 @@ export default {
   name: "Api",
   components: {},
 watch:{
+ 
   modoescuro: function(){
+   this.$eventBus.$emit('muda', this.modoescuro)
+
     if(this.modoescuro){
 
       
@@ -455,32 +457,34 @@ watch:{
       this.detalhecor = "white!important",
       this.backgroundhtml = "#060606!important",
       this.backgroundmenu = "#fbfbfb5e!important"
+      this.$eventBus.$emit('poecor', this.backgroundhtml)
+
     }else{
      this.backgroundsesao ="",
       this.backgrounddetalhe = "",
       this.detalhecor = "",
       this.backgroundhtml = "",
       this.backgroundmenu = ""
-
+     this.$eventBus.$emit('tiracor', this.backgroundhtml)
 
     } 
   }
 },
-// computed:{
-// customStyle () {
-//   if(this.modoescuro){
-//  return { 
-//    backgroundColor:this.backgroundsesao
-// }
-//   }
-
-//   }
-   
-
-// },
-
-
   methods:{
+
+// poecor() {
+//       this.$eventBus.$emit('poecor', this.backgroundhtml)
+//     },
+
+// tiracor() {
+//       this.$eventBus.$emit('tiracor', this.backgroundhtml)
+//     },
+// muda() {
+//       this.$eventBus.$emit('muda', this.modoescuro)
+//     },
+
+
+
 videoarrumadu(){
 return this.video.results && this.video.results.length > 0 ? this.video.results[0].key : ''
 },
@@ -661,6 +665,7 @@ axios
    }},
   mounted() {
     this.metodofilmes(this.populares,1);
+    
   },
 };
 </script>
@@ -745,7 +750,7 @@ h2 {
  
 }
 .custom-coluna-filme {
-     
+     border-radius: 5%;
       box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
        /*box-shadow: 0rem 2rem 5rem rgb(255 255 255 / 30%);*/
   margin-bottom: 5%!important;
@@ -764,7 +769,7 @@ h2 {
 }
 
 .custom-coluna {
-     
+     border-radius: 5%;
       box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
        /*box-shadow: 0rem 2rem 5rem rgb(255 255 255 / 30%);*/
   margin-bottom: 5%!important;

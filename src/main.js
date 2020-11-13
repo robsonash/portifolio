@@ -32,6 +32,13 @@ const router = new VueRouter({
 
 Vue.use(Buefy);
 
+
+
+Vue.prototype.$eventBus = new Vue()
+
+
+
+
 Vue.config.productionTip = false
 new Vue({
   router:router,
