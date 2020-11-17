@@ -754,6 +754,7 @@ h2 {
 }
 
 .custom-coluna {
+      min-width: 300px;
      border-radius: 5%;
       box-shadow: 0rem 2rem 5rem rgba(0,0,0,0.2);
        /*box-shadow: 0rem 2rem 5rem rgb(255 255 255 / 30%);*/
