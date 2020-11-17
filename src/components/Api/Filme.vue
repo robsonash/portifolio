@@ -13,8 +13,8 @@
         <p class="menu-label">CATEGORIAS</p>
         <ul class="menu-list">
           
-          <li class="botaocor"> 
-           <b-switch v-model="modoescuro">Mude de cor</b-switch>
+          <li  class="botaocor"> 
+           <b-switch  v-model="modoescuro"><span :style="{color: this.textocolor}" class="letras" >Mude de cor</span></b-switch>
             </li>
           <li v-on:click="metodofilmes(populares,1)">
 
@@ -427,13 +427,14 @@ export default {
 
 
                 backgroundsesao:"",
+                textocolor:"",
                 backgrounddetalhe:"",
                 detalhecor:"",
                 backgroundhtml:"",
                 backgroundmenu:""
 //                  <!-- cores #060606 para o html  -->
 //  <!-- cor do detalhe #5640406b -->
-//  <!-- menu #fbfbfb5e -->
+//  <!-- menu #fbfbfb5e ou #c9e85f0d -->
                 // size: '',
                 // type: null,
                 // passiveType: null,
@@ -447,44 +448,35 @@ export default {
 watch:{
  
   modoescuro: function(){
-   this.$eventBus.$emit('muda', this.modoescuro)
-
     if(this.modoescuro){
 
-      
+      this.textocolor = "white!important",
       this.backgroundsesao ="black!important",
       this.backgrounddetalhe = "#5640406b!important",
       this.detalhecor = "white!important",
       this.backgroundhtml = "#060606!important",
       this.backgroundmenu = "#fbfbfb5e!important"
       this.$eventBus.$emit('poecor', this.backgroundhtml)
-
+      this.$eventBus.$emit('muda', this.modoescuro)
     }else{
-     this.backgroundsesao ="",
+      this.backgroundsesao ="",
       this.backgrounddetalhe = "",
       this.detalhecor = "",
       this.backgroundhtml = "",
       this.backgroundmenu = ""
-     this.$eventBus.$emit('tiracor', this.backgroundhtml)
-
+      this.textocolor = "",
+      this.$eventBus.$emit('tiracor', this.backgroundhtml)
+      this.$eventBus.$emit('muda', this.modoescuro)
     } 
   }
 },
+
+ beforeRouteUpdate(to,from,next){
+  console.log(this);
+  next;
+},
   methods:{
-
-// poecor() {
-//       this.$eventBus.$emit('poecor', this.backgroundhtml)
-//     },
-
-// tiracor() {
-//       this.$eventBus.$emit('tiracor', this.backgroundhtml)
-//     },
-// muda() {
-//       this.$eventBus.$emit('muda', this.modoescuro)
-//     },
-
-
-
+   
 videoarrumadu(){
 return this.video.results && this.video.results.length > 0 ? this.video.results[0].key : ''
 },
@@ -516,13 +508,6 @@ axios
 
 
 },
-
-
-
-
-
-
-
 
     metodofilmesId(id){
          this.normalfilme = false;

@@ -9,6 +9,7 @@ import Bitcoin from './components/Api/Bitcoin.vue'
 import Cep from './components/Api/Cep.vue'
 import Tempo from './components/Api/Tempo.vue'
 import Filme from './components/Api/Filme.vue'
+import Pokemon from './components/Api/Pokemon.vue'
 import NotFound from './components/NotFound';
 
 
@@ -23,6 +24,7 @@ const router = new VueRouter({
     { path:'/api/cep',component:Cep },
     { path:'/api/tempo',component:Tempo },
     { path:'/api/filme',component:Filme },
+    { path:'/api/pokemon',component:Pokemon },
    { path:'*',component:NotFound }
     
   ]
@@ -40,6 +42,20 @@ Vue.prototype.$eventBus = new Vue()
 
 
 Vue.config.productionTip = false
+
+
+router.afterEach((to,from,next)=>{
+  // if(typeof backgroundhtml === "undefined"){
+    if(from.fullPath === "/api/filme"){
+      // this.$eventBus.$emit('tiracor', this.backgroundhtml)
+      console.log("cor",this)
+    next;}
+    else{
+     next
+    }
+  });
+
+
 new Vue({
   router:router,
   render: h => h(App),

@@ -17,26 +17,46 @@ import Menu from './components/Menu.vue'
 export default {
 data() {
     return {
-        backgroundhtml:""
+        backgroundhtml:"",
+        modoescuro:''
   }},
   name: 'App',
   components: {
     Menu
 
   },
+
+  watch:{
+      modoescuro: function(){
+
+//  this.$eventBus.$on('muda',(modoescuro) =>{
+//  this.modoescuro = modoescuro;
+//  console.log(this.modoescuro);
+// })
+
+      }
+  },
+
+
+
+
+
+
 created(){
-
-this.$eventBus.$on('poecor',(backgroundhtml) =>{
-this.backgroundhtml = "#060606!important";})
-  
+ this.$eventBus.$on('poecor',(backgroundhtml) =>{
+ this.backgroundhtml = "#060606!important";})
+ this.$eventBus.$on('muda',(modoescuro) =>{
+ this.modoescuro = modoescuro;
+ console.log(this.modoescuro);
+})
 },
+
 beforeUpdate(){
-
  this.$eventBus.$on('tiracor',(backgroundhtml) =>{
- this.backgroundhtml = "";
-
-}
-   )
+ this.backgroundhtml = "";})
+ this.$eventBus.$on('muda',(modoescuro) =>{
+ this.modoescuro = modoescuro;
+ console.log(this.modoescuro);})
 },
 
 
@@ -60,6 +80,6 @@ beforeUpdate(){
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+padding-top: 60px
 }
 </style>
