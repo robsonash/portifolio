@@ -140,12 +140,6 @@ if(this.numero.length === 11){
 *{
     font-family: 'Montserrat', sans-serif;
 }
-h1{
-    color:#6d736b!important;
-}
-h2 {
-  color: #0000ff;
-}
 .custom{
   margin-bottom: 20px;
 }
@@ -164,17 +158,10 @@ h2 {
     border: 1px solid #f1f1f1;
     border-radius: 5px;
     transition: all .2s;
-        border-radius: 3px; 
-             padding: 10px;
- max-width: 600px;
+    border-radius: 3px; 
+    padding: 10px;
+    max-width: 600px;
     margin: 0 auto;
-
-    
-    /* color: rgb(0, 0, 0);
-    font-size: 1.3rem!important;
-    font-weight: 100; */
-  
- 
 }
     .seu{
  
