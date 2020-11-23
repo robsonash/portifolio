@@ -10,7 +10,6 @@ import Cep from './components/Api/Cep.vue'
 import Tempo from './components/Api/Tempo.vue'
 import Filme from './components/Api/Filme.vue'
 import Watzap from './components/Api/Watzap.vue'
-import Pokemon from './components/Api/Pokemon.vue'
 import NotFound from './components/NotFound';
 
 
@@ -26,7 +25,6 @@ const router = new VueRouter({
     { path:'/api/tempo',component:Tempo },
     { path:'/api/filme',component:Filme },
     { path:'/api/watzap',component:Watzap },
-    { path:'/api/pokemon',component:Pokemon },
    { path:'*',component:NotFound }
     
   ]

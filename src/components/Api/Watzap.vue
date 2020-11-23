@@ -28,7 +28,7 @@
 <p class="customp title is-1">Seu link está pronto</p>
 <div class="customw is-flex is-align-content-start is-justify-content-start is-flex-direction-column">
 <p class="seu is-flex">Seu link</p>
-<p class="resultado is-flex" ref="links">{{link}}</p>
+<p @select="this.link" class="resultado is-flex" ref="links">{{link}}</p>
 </div>
 <div class="is-flex is-align-content-center  is-justify-content-center">
 <div class="buttons">
@@ -70,7 +70,7 @@ export default {
  
   data() {
     return {
-   aparecer:false,
+    aparecer:false,
     numero:"",
     mensagem:"",
     link:"",
@@ -116,18 +116,19 @@ if(this.numero.length === 11){
  }
    },
    methods:{
-
        gerarlink:function(){
         this.aparecer = true;
          return this.link = "https://api.whatsapp.com/send?phone=55" + this.numero + "&text=" + this.mensagem;
            
        },
        copiar:function(){
-            this.copia = this.$refs.links;
-          select(this.copia);
-        document.execCommand("copy"); 
+             this.copia = this.$refs.links.innerHTML;
+        
+                  console.log(this.copia)
+             document.execCommand("copy"); 
        },
        gerarnovolink:function(){
+         this.link = '',
            this.numero = '';
            this.mensagem = '';
            this.aparecer = false;
