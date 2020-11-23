@@ -32,7 +32,8 @@
 </div>
 <div class="is-flex is-align-content-center  is-justify-content-center">
 <div class="buttons">
-  <button @click="copiar" class="button is-success is-outlined">Copiar Link</button>
+  <!-- <button @click="copiar" class="button is-success is-outlined">Copiar Link</button> -->
+    <button @click.stop="copiar(link)" class="button is-success is-outlined">Copiar Link</button>
     <button @click="gerarnovolink" class="button is-success ">Gerar novo link</button>
 </div>
 
@@ -121,12 +122,27 @@ if(this.numero.length === 11){
          return this.link = "https://api.whatsapp.com/send?phone=55" + this.numero + "&text=" + this.mensagem;
            
        },
-       copiar:function(){
-             this.copia = this.$refs.links.innerHTML;
-        
-                  console.log(this.copia)
-             document.execCommand("copy"); 
-       },
+
+  copiar(texto) {
+      if (window.clipboardData && window.clipboardData.setData) {
+        return clipboardData.setData("Text", texto); 
+
+    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+        var cliptextarea = document.createElement("textarea");
+        cliptextarea.textContent = texto;
+        cliptextarea.style.position = "fixed"; 
+        document.body.appendChild(cliptextarea);
+		cliptextarea.focus();
+        cliptextarea.select();
+        try {
+            return document.execCommand("copy");  
+        } catch (ex) {
+            return false;
+        } finally {
+            document.body.removeChild(cliptextarea);
+        }
+    }
+    },
        gerarnovolink:function(){
          this.link = '',
            this.numero = '';
