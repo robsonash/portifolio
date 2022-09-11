@@ -49,6 +49,9 @@
           <a class="navbar-item" >
       <router-link class="navbar-item" to="/api/watzap">Watzap-link</router-link>
       </a>
+      <a class="navbar-item" >
+      <router-link class="navbar-item" to="/api/roleta">Roleta</router-link>
+      </a>
       </div>
       </div>
     </div>
