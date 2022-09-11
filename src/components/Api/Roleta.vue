@@ -1,18 +1,20 @@
 <template>
 <div>
     <vue-winwheel :segments="options" />
+
     </div>  
 </template>
 
 <script>
-import VueWinwheel from 'vue-winwheel-reversion/vue-winwheel'
-
+import VueWinwheel from '@robsonash/vue-winwheel-reversion/vue-winwheel'
 export default {
   components:{
     VueWinwheel
+    
   },
   data(){
     return{
+        showModal: false,
 	  pageTitle       : "Vue-Wheel",
       wheelSize       : 400,
       btnColor        : "",
@@ -44,40 +46,6 @@ export default {
     }
   },
   methods: {
-    onFinishSpin(){
-      let prize = this.theWheel.getIndicatedSegment()
-      console.log('prize', prize)
-				/* 	console.log('prize text', prize.text)
-					prize.desc = 'sdbgfsdbdf'
-					console.log('prize text', prize.desc) */
-				if(prize.text === 'Teste 1') {
-                    console.log('1')
-					prize.desc === 'teste 1'
-                    this.modalPrize = {
-					text: prize.text,
-					desc: prize.desc
-                    }
-				}
-                if(prize.text === 'Teste 2') {
-                       console.log('2')
-					prize.desc === 'teste 2'
-                    this.modalPrize = {
-					text: prize.text,
-					desc: prize.desc
-                    }
-				}
-                if(prize.text === 'Teste 1') {
-                       console.log('3')
-					prize.desc === 'teste 2'
-                    this.modalPrize = {
-					text: prize.text,
-					desc: prize.desc
-				}
-			
-				this.showModal = true
-
-    }
-  }
 }
 }
 </script>

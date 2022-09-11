@@ -9,13 +9,14 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
+    "@robsonash/vue-winwheel-reversion": "^1.2.2",
     "axios": "^0.20.0",
     "buefy": "^0.9.3",
     "bulma": "^0.9.1",
     "core-js": "^3.6.5",
+    "gsap": "^3.11.1",
     "vue": "^2.6.11",
-    "vue-router": "^3.4.7",
-    "vue-winwheel-reversion": "^1.2.1"
+    "vue-router": "^3.4.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
